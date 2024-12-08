@@ -10,6 +10,8 @@ import { HomePage } from "@/pages/home/HomePage";
 import { PokemonPage } from "@/pages/pokedex/PokemonPage";
 import { BattleModePage } from "@/pages/battle/BattleModePage";
 import { NavigatableComponent } from "@/widgets/navigatableComponent/NavigatableComponent";
+import { Presets } from "@/entities/presets/ui/Presets";
+import { PresetBuilder } from "@/entities/presets/ui/PresetsBuilder";
 
 const App = () => {
   const { data: user, isLoading } = useGetUser();
@@ -44,6 +46,14 @@ const App = () => {
             <Route
               path="/battle"
               element={<NavigatableComponent component={<BattleModePage />} />}
+            />
+            <Route
+              path="/presets"
+              element={<NavigatableComponent component={<Presets />} />}
+            />
+            <Route
+              path="/presets/new"
+              element={<NavigatableComponent component={<PresetBuilder />} />}
             />
           </>
         )}
