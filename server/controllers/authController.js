@@ -29,4 +29,17 @@ const verifySignature = async (req, res) => {
   res.json({ user });
 };
 
-export { generateNonce, verifySignature };
+const logout = async (req, res) => {
+  if (req.session) {
+    req.session.destroy((error) => {
+      if (error) {
+        return res.status(500).json({ message: "Failed to log out" });
+      }
+      res.status(200).json({ message: "Logged out successfully" });
+    });
+  } else {
+    res.status(200).json({ message: "Logged out successfully" });
+  }
+};
+
+export { generateNonce, verifySignature, logout };

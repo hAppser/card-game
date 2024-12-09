@@ -11,8 +11,8 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   store: create({
     mongoUrl: process.env.MONGO_URI,
-    collectionName: "sessions",
-    dbName: "pokemons",
+    collectionName: process.env.SESSION_COLLECTION_NAME,
+    dbName: process.env.DB_NAME,
   }),
   cookie: {
     maxAge: 1000 * 60 * 60,

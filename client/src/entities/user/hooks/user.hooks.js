@@ -6,8 +6,15 @@ export const useGetUser = () =>
   useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const { data } = await apiClient.get("/user");
-      return data.user;
+      try {
+        const { data } = await apiClient.get("/user");
+        return data.user;
+      } catch (error) {
+        if (error.response?.status === 401) {
+          return null;
+        }
+        throw error;
+      }
     },
     staleTime: 1000 * 60 * 5,
     cacheTime: 1000 * 60 * 30,

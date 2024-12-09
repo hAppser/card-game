@@ -1,19 +1,17 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useConnectMetaMask } from "@/features/auth/hooks/useMetaMaskAuth";
-import {
-  useGetUser,
-  useHandleUsername,
-} from "../../entities/user/hooks/user.hooks";
+import { useGetUser } from "@/entities/user/hooks/user.hooks";
 
 export const AuthPage = () => {
-  const [username, setUsername] = useState("");
   const connectWithMetaMask = useConnectMetaMask();
   const { data: user, refetch, isLoading } = useGetUser();
-  const createUsername = useHandleUsername();
+  const navigate = useNavigate();
+
   const handleConnect = async () => {
     try {
       await connectWithMetaMask.mutateAsync();
       await refetch();
+      if (user) navigate("/home");
     } catch (error) {
       console.error("Authentication failed:", error.message);
       alert(
@@ -22,36 +20,24 @@ export const AuthPage = () => {
     }
   };
 
-  const handleSetUsername = async () => {
-    try {
-      await createUsername.mutateAsync(username);
-      await refetch();
-    } catch (error) {
-      console.error("Failed to set username:", error.message);
-      alert("Could not set username. Please try again.");
-    }
-  };
   if (isLoading) return <p>Loading...</p>;
+
   return (
-    <>
-      {!user ? (
-        <button onClick={handleConnect}>Login with MetaMask</button>
-      ) : (
-        <div>
-          <p>Welcome, {user.username || "Champion"}!</p>
-          {!user.username && (
-            <div>
-              <input
-                type="text"
-                placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <button onClick={handleSetUsername}>Set Username</button>
-            </div>
-          )}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4 text-gray-700">
+            Connect Your Wallet
+          </h1>
+          <p className="text-gray-600 mb-6">Log in with MetaMask to proceed.</p>
+          <button
+            onClick={handleConnect}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
+          >
+            Login with MetaMask
+          </button>
         </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
