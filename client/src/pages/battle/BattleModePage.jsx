@@ -5,7 +5,6 @@ export const BattleModePage = () => {
   const navigate = useNavigate();
 
   const handleModeSelection = (mode, damageType) => {
-    console.log(mode);
     navigate(`/preset-selection?mode=${mode}&damageType=${damageType}`);
   };
 
