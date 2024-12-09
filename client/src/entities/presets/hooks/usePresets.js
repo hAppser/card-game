@@ -1,5 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchPresets, createPreset, deletePreset } from "../api/presets.api";
+import {
+  fetchPresets,
+  createPreset,
+  deletePreset,
+  fetchPresetsByMode,
+} from "../api/presets.api";
 
 export const usePresets = () => {
   return useQuery({ queryFn: fetchPresets, queryKey: ["presets"] });
@@ -23,4 +28,13 @@ export const useDeletePreset = () => {
       queryClient.invalidateQueries(["presets"]);
     },
   });
+};
+
+export const usePresetsByMode = (mode) => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["presets", mode],
+    queryFn: () => fetchPresetsByMode(mode),
+  });
+
+  return { data, isLoading, error };
 };

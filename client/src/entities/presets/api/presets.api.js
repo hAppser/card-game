@@ -13,3 +13,10 @@ export const createPreset = async (preset) => {
 export const deletePreset = async (presetId) => {
   await apiClient.delete(`/presets/${presetId}`);
 };
+
+export const fetchPresetsByMode = async (mode) => {
+  const { data } = await apiClient
+    .get(`/presets?mode=${mode}`)
+    .then((res) => res);
+  return data;
+};

@@ -1,7 +1,13 @@
 import Preset from "../models/Preset.js";
 export async function getPresetsForUser(req, res) {
   try {
-    const presets = await Preset.find({ userId: req.session.user.id });
+    const { mode } = req.query;
+    const filter = { userId: req.session.user.id };
+
+    if (mode === "1v1") filter["pokemon.1"] = { $exists: false };
+    if (mode === "3v3") filter["pokemon.2"] = { $exists: true };
+
+    const presets = await Preset.find(filter);
     res.json(presets);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch presets" });
