@@ -4,12 +4,17 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { useGetUser } from "@/entities/user/hooks/user.hooks";
 import { AuthPage } from "@/pages/auth/AuthPage";
 import { HomePage } from "@/pages/home/HomePage";
 import { PokemonPage } from "@/pages/pokedex/PokemonPage";
 import { BattleModePage } from "@/pages/battle/BattleModePage";
 import { NavigatableComponent } from "@/widgets/navigatableComponent/NavigatableComponent";
+import { Presets } from "@/entities/presets/ui/Presets";
+import { PresetBuilder } from "@/entities/presets/ui/PresetsBuilder";
+import { PresetSelectionPage } from "@/entities/presets/ui/PresetSelection";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const { data: user, isLoading } = useGetUser();
@@ -28,6 +33,7 @@ const App = () => {
 
   return (
     <Router>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Routes>
         {!user && <Route path="/login" element={<AuthPage />} />}
         {user && (
@@ -44,6 +50,20 @@ const App = () => {
             <Route
               path="/battle"
               element={<NavigatableComponent component={<BattleModePage />} />}
+            />
+            <Route
+              path="/presets"
+              element={<NavigatableComponent component={<Presets />} />}
+            />
+            <Route
+              path="/presets/new"
+              element={<NavigatableComponent component={<PresetBuilder />} />}
+            />
+            <Route
+              path="/preset-selection"
+              element={
+                <NavigatableComponent component={<PresetSelectionPage />} />
+              }
             />
           </>
         )}

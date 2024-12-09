@@ -8,6 +8,7 @@ import sessionMiddleware from "./middlewares/sessionMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import pokemonRoutes from "./routes/pokemonRoutes.js";
+import presetsRoutes from "./routes/presetsRoutes.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(sessionMiddleware);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/pokemons", pokemonRoutes);
+app.use("/presets", presetsRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

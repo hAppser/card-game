@@ -37,6 +37,14 @@ export const Navbar = () => {
           </li>
           <li>
             <Link
+              to="/presets"
+              className="hover:text-blue-400 transition duration-200"
+            >
+              Presets
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/pokedex"
               className="hover:text-blue-400 transition duration-200"
             >
@@ -84,6 +92,15 @@ export const Navbar = () => {
               onClick={closeMenu}
             >
               Battle Modes
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/presets"
+              className="block hover:text-blue-400 transition duration-200"
+              onClick={closeMenu}
+            >
+              Presets
             </Link>
           </li>
           <li>
