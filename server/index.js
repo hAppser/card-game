@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3077;
 
 connectDB();
 
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
 
 app.use(bodyParser.json());
 
@@ -29,6 +29,4 @@ app.use("/pokemons", pokemonRoutes);
 app.use("/presets", presetsRoutes);
 app.use("/matches", matchesRoutes);
 
-app.listen(PORT, () =>
-  console.log(`Server is running on http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
