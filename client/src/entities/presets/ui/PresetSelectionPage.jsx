@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { usePresetsByMode } from "@/entities/presets/hooks/usePresets";
 import { Button } from "@/shared/ui/Button";
+import { useCreateMatch } from "@/entities/match/hooks/match.hooks";
 
 export const PresetSelectionPage = () => {
   const [searchParams] = useSearchParams();
@@ -10,9 +11,11 @@ export const PresetSelectionPage = () => {
   const damageType = searchParams.get("damageType");
 
   const { data: presets, isLoading } = usePresetsByMode(mode);
+  const createMatch = useCreateMatch();
 
-  const handleSelectPreset = (preset) => {
-    navigate(`/battle/start?presetId=${preset._id}&damageType=${damageType}`);
+  const handleSelectPreset = async (mode, pokemon) => {
+    const data = await createMatch.mutateAsync({ pokemon, mode });
+    navigate(`/match/start?matchId=${data.id}`);
   };
 
   const handleCreatePreset = () => {
@@ -66,7 +69,7 @@ export const PresetSelectionPage = () => {
             <Button
               label="Select Preset"
               className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
-              onClick={() => handleSelectPreset(preset)}
+              onClick={() => handleSelectPreset(mode, preset.pokemon)}
             />
           </div>
         ))}

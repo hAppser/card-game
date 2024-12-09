@@ -29,7 +29,7 @@ export const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/battle"
+              to="/match"
               className="hover:text-blue-400 transition duration-200"
             >
               Battle Modes
@@ -87,7 +87,7 @@ export const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/battle"
+              to="/match"
               className="block hover:text-blue-400 transition duration-200"
               onClick={closeMenu}
             >

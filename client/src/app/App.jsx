@@ -9,11 +9,13 @@ import { useGetUser } from "@/entities/user/hooks/user.hooks";
 import { AuthPage } from "@/pages/auth/AuthPage";
 import { HomePage } from "@/pages/home/HomePage";
 import { PokemonPage } from "@/pages/pokedex/PokemonPage";
-import { BattleModePage } from "@/pages/battle/BattleModePage";
+import { MatchModePage } from "@/pages/match/MatchModePage";
 import { NavigatableComponent } from "@/widgets/navigatableComponent/NavigatableComponent";
-import { Presets } from "@/entities/presets/ui/Presets";
-import { PresetBuilder } from "@/entities/presets/ui/PresetsBuilder";
-import { PresetSelectionPage } from "@/entities/presets/ui/PresetSelection";
+import { Presets } from "@/pages/presets/ui/Presets";
+import { PresetBuilderPage } from "@/pages/presets/ui/PresetBuilderPage";
+import { PresetSelectionPage } from "@/pages/presets/ui/PresetSelectionPage";
+import { MatchPage } from "@/pages/match/MatchPage";
+
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -48,8 +50,12 @@ const App = () => {
               element={<NavigatableComponent component={<PokemonPage />} />}
             />
             <Route
-              path="/battle"
-              element={<NavigatableComponent component={<BattleModePage />} />}
+              path="/match"
+              element={<NavigatableComponent component={<MatchModePage />} />}
+            />
+            <Route
+              path="/match/start"
+              element={<NavigatableComponent component={<MatchPage />} />}
             />
             <Route
               path="/presets"
@@ -57,7 +63,9 @@ const App = () => {
             />
             <Route
               path="/presets/new"
-              element={<NavigatableComponent component={<PresetBuilder />} />}
+              element={
+                <NavigatableComponent component={<PresetBuilderPage />} />
+              }
             />
             <Route
               path="/preset-selection"

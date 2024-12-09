@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button } from "@/shared/ui/Button";
 
-export const BattleModeCard = ({
+export const MatchModeCard = ({
   cardClassName,
   titleClassName,
   buttonClassName,

@@ -7,7 +7,7 @@ import { PokemonFilters } from "@/features/pokemonFilters/ui/PokemonFilters";
 import { Pagination } from "@/shared/ui/Pagination";
 import { useCreatePreset } from "../hooks/usePresets";
 
-export const PresetBuilder = () => {
+export const PresetBuilderPage = () => {
   const [selectedPokemons, setSelectedPokemons] = useState([]);
   const [presetName, setPresetName] = useState("");
   const [filters, setFilters] = useState({ type: "", attack: "", defense: "" });

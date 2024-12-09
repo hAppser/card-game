@@ -14,6 +14,16 @@ const presetSchema = new Schema({
     {
       id: { type: String, required: true },
       name: { type: String, required: true },
+      hp: { type: Number, required: true },
+      attack: { type: Number, required: true },
+      defense: { type: Number, required: true },
+      speed: { type: Number, required: true },
+      type: { type: [String], required: false },
+      images: {
+        sprite: String,
+        thumbnail: String,
+        hires: String,
+      },
     },
   ],
 });

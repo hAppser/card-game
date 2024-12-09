@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export const PokemonMiniCard = ({ pokemon, onClick, className }) => {
   const { name, type, attack, defense, speed, hp, images } = pokemon;
   return (

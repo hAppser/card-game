@@ -4,8 +4,8 @@ export async function getPresetsForUser(req, res) {
     const { mode } = req.query;
     const filter = { userId: req.session.user.id };
 
-    if (mode === "1v1") filter["pokemon.1"] = { $exists: false };
-    if (mode === "3v3") filter["pokemon.2"] = { $exists: true };
+    if (mode === "1") filter["pokemon.1"] = { $exists: false };
+    if (mode === "3") filter["pokemon.2"] = { $exists: true };
 
     const presets = await Preset.find(filter);
     res.json(presets);
@@ -16,11 +16,9 @@ export async function getPresetsForUser(req, res) {
 
 export async function createPreset(req, res) {
   const { name, pokemon } = req.body;
-
   if (!name || !pokemon || pokemon.length === 0) {
     return res.status(400).json({ message: "Invalid preset data" });
   }
-
   try {
     const preset = new Preset({
       userId: req.session.user.id,
