@@ -2,31 +2,41 @@ import { ethers } from "ethers";
 import User from "../models/User.js";
 
 const generateNonce = async (req, res) => {
+  res.setHeader("Cache-Control", "no-store");
   const nonce = Math.floor(Math.random() * 1000000).toString();
+
   req.session.nonce = nonce;
+  await req.session.save();
+
   res.json({ nonce });
 };
 
 const verifySignature = async (req, res) => {
-  const { walletAddress, signature } = req.body;
-  const { nonce } = req.session;
+  res.setHeader("Cache-Control", "no-store");
+  try {
+    const { walletAddress, signature } = req.body;
 
-  if (!nonce) return res.status(400).json({ error: "Nonce not found" });
+    const { nonce } = req.session;
 
-  const msg = `Nonce: ${nonce}`;
-  const recoveredAddress = ethers.verifyMessage(msg, signature);
+    if (!nonce) return res.status(400).json({ error: "Nonce not found" });
 
-  if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
-    return res.status(401).json({ error: "Signature mismatch" });
+    const msg = `Nonce: ${nonce}`;
+    const recoveredAddress = ethers.verifyMessage(msg, signature);
+
+    if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
+      return res.status(401).json({ error: "Signature mismatch" });
+    }
+
+    let user = await User.findOne({ walletAddress }, "username, walletAddress");
+    if (!user) {
+      user = await User.create({ walletAddress, nonce });
+    }
+
+    req.session.user = user;
+    res.json({ user });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
-
-  let user = await User.findOne({ walletAddress }, "username, walletAddress");
-  if (!user) {
-    user = await User.create({ walletAddress, nonce });
-  }
-
-  req.session.user = user;
-  res.json({ user });
 };
 
 const logout = async (req, res) => {

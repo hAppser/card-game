@@ -13,15 +13,16 @@ import matchesRoutes from "./routes/matchRoutes.js";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3077;
+const PORT = process.env.PORT || 3000;
 
 connectDB();
 
 app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL }));
-
-app.use(bodyParser.json());
+app.set("trust proxy", 1);
 
 app.use(sessionMiddleware);
+
+app.use(bodyParser.json());
 
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);

@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const { create } = connectMongo;
+const isProduction = process.env.NODE_ENV === "production";
 
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
@@ -17,7 +18,8 @@ const sessionMiddleware = session({
   cookie: {
     maxAge: 1000 * 60 * 60,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   },
 });
 
