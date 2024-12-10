@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Button } from "./Button";
 export const Pagination = ({ page, setPage, maxPage }) => {
   return (

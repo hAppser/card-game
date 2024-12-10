@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { usePokemon } from "@/entities/pokemon/hooks/pokemon.hooks";
+import { usePokemons } from "@/entities/pokemon/hooks/pokemon.hooks";
 import { PokemonCard } from "@/entities/pokemon/ui/PokemonCard";
 import { PokemonFilters } from "@/features/pokemonFilters/ui/PokemonFilters";
 import { Pagination } from "@/shared/ui/Pagination";
@@ -7,7 +7,7 @@ import { Pagination } from "@/shared/ui/Pagination";
 export const PokemonPage = () => {
   const [filters, setFilters] = useState({ type: "", attack: "", defense: "" });
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError } = usePokemon(filters, page, 8);
+  const { data, isLoading, isError } = usePokemons(filters, page, 8);
   useEffect(() => {
     setPage(1);
   }, [filters]);

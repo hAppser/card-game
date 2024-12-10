@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { usePokemon } from "@/entities/pokemon/hooks/pokemon.hooks";
+import { usePokemons } from "@/entities/pokemon/hooks/pokemon.hooks";
 import { PokemonMiniCard } from "@/entities/pokemon/ui/PokemonMiniCard";
 import { Button } from "@/shared/ui/Button";
 import { PokemonFilters } from "@/features/pokemonFilters/ui/PokemonFilters";
@@ -12,7 +12,7 @@ export const PresetBuilderPage = () => {
   const [presetName, setPresetName] = useState("");
   const [filters, setFilters] = useState({ type: "", attack: "", defense: "" });
   const [page, setPage] = useState(1);
-  const { data, isLoading } = usePokemon(filters, page, 8);
+  const { data, isLoading } = usePokemons(filters, page, 8);
   const createPreset = useCreatePreset();
 
   const handleSelectPokemon = (pokemon) => {

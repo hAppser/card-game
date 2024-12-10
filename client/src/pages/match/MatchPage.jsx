@@ -10,34 +10,29 @@ export const MatchPage = () => {
   const [searchParams] = useSearchParams();
   const matchId = searchParams.get("matchId");
   const { data, isLoading, refetch } = useGetMatch(matchId || "");
-  const [turn, setTurn] = useState("player");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const attackEnemy = useHandleAttack(matchId);
 
   const handleAttack = async () => {
-    if (isButtonDisabled) return;
+    if (isButtonDisabled && data.turn === "player") return;
     setIsButtonDisabled(true);
-
     try {
-      attackEnemy.mutateAsync().then(refetch);
-      setTurn(data.turn);
+      await attackEnemy.mutateAsync();
+      await refetch();
     } catch (error) {
       console.error("Error during attack:", error);
     } finally {
-      setTimeout(() => {
-        setIsButtonDisabled(false);
-      }, 300);
+      setIsButtonDisabled(false);
     }
   };
 
   useEffect(() => {
-    if (!isLoading) {
-      setTurn(data.turn);
-      if (data.turn === "bot") {
-        handleAttack(turn);
+    if (!isLoading && data) {
+      if (data.turn === "bot" && data.status === "ongoing") {
+        handleAttack();
       }
     }
-  }, [data]);
+  }, [data, isLoading]);
 
   if (isLoading)
     return <div className="text-center mt-10 text-lg">Loading...</div>;

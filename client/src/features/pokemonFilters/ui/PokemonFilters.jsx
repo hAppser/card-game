@@ -1,7 +1,7 @@
 import { POKEMON_TYPES } from "@/shared/lib/constants";
 import { useState } from "react";
 import { Dropdown } from "@/shared/ui/Dropdown";
-/* eslint-disable react/prop-types */
+
 export const PokemonFilters = ({ filters, setFilters }) => {
   const [selectedType, setSelectedType] = useState(filters?.type || "");
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Button } from "@/shared/ui/Button";
 
 export const MatchModeCard = ({
